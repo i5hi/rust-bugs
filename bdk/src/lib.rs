@@ -15,7 +15,7 @@ mod tests {
     use bitcoin::util::address::Address;
     
     #[test]
-    fn test_build_absolute_and_rate(){
+    fn test_fee_absolute_and_rate_with_build_tx(){
       let xkey = "[db7d25b5/84'/1'/6']tpubDCCh4SuT3pSAQ1qAN86qKEzsLoBeiugoGGQeibmieRUKv8z6fCTTmEXsb9yeueBkUWjGVzJr91bCzeCNShorbBqjZV4WRGjz3CrJsCboXUe";
       let deposit_desc = format!("wpkh({}/0/*)", xkey);
       let change_desc = deposit_desc.replace("/0/*","/1/*");
@@ -36,7 +36,6 @@ mod tests {
       let (psbt, details) = {
         let mut builder = wallet.build_tx();
         builder
-        .enable_rbf()
         .add_recipient(to_address.script_pubkey(),amount)
         .fee_rate(fee_rate);
         builder.finish().unwrap()
